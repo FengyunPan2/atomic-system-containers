@@ -1,4 +1,4 @@
-FROM kubernetes-master:rawhide
+FROM docker.io/fengyunpan/kubernetes-master:v1.9.6.1
 
 ENV container=docker
 
@@ -9,7 +9,7 @@ LABEL bzcomponent="$NAME" \
         release="$RELEASE.$DISTTAG" \
         architecture="$ARCH" \
         atomic.type='system' \
-        maintainer="Jason Brooks <jbrooks@redhat.com>"
+        maintainer="FengyunPan <pan_feng_yun@163.com>"
 
 COPY launch.sh /usr/bin/kube-controller-manager-docker.sh
 

@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:rawhide
+FROM registry.fedoraproject.org/fedora:27
 
 ENV NAME=kubernetes-node VERSION=0 RELEASE=0 ARCH=x86_64
 LABEL bzcomponent="$NAME" \
@@ -6,7 +6,14 @@ LABEL bzcomponent="$NAME" \
         version="$VERSION" \
         release="$RELEASE.$DISTTAG" \
         architecture="$ARCH" \
-        maintainer="Jason Brooks <jbrooks@redhat.com>"
+        maintainer="FengyunPan <pan_feng_yun@163.com>"
 
-RUN dnf -y --setopt=tsflags=nodocs update && dnf clean all
-RUN dnf install -y --setopt=tsflags=nodocs kubernetes-node findutils && dnf clean all
+RUN echo "proxy=http://10.21.0.180:1080" >> /etc/dnf/dnf.conf
+RUN echo "http_proxy=http://10.21.0.180:1080" >> /etc/dnf/dnf.conf
+RUN echo "https_proxy=https://10.21.0.180:1080" >> /etc/dnf/dnf.conf
+RUN echo "ftp_proxy=http://10.21.0.180:1080" >> /etc/dnf/dnf.conf
+RUN export http_proxy=http://10.21.0.180:1080 && export https_proxy=https://10.21.0.180:1080 && dnf -y --setopt=tsflags=nodocs update && dnf clean all
+RUN export http_proxy=http://10.21.0.180:1080 && export https_proxy=https://10.21.0.180:1080 && dnf -y install dnf-plugins-core && dnf config-manager --add-repo  https://download.docker.com/linux/fedora/docker-ce.repo && dnf config-manager --set-enabled docker-ce-edge && dnf config-manager --set-enabled docker-ce-test
+RUN export http_proxy=http://10.21.0.180:1080 && export https_proxy=https://10.21.0.180:1080 && dnf install -y --setopt=tsflags=nodocs docker-ce
+RUN export http_proxy=http://10.21.0.180:1080 && export https_proxy=https://10.21.0.180:1080 && dnf install -y /rpms/kubernetes-client-1.9.6.1-1.el7.centos.x86_64.rpm
+RUN export http_proxy=http://10.21.0.180:1080 && export https_proxy=https://10.21.0.180:1080 && dnf install -y --setopt=tsflags=nodocs /rpms/kubernetes-node-1.9.6.1-1.el7.centos.x86_64.rpm findutils && dnf clean all
