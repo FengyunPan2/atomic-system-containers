@@ -1,4 +1,4 @@
-FROM kubernetes-node:rawhide
+FROM docker.io/fengyunpan/kubernetes-node:v1.9.6.1
 
 ENV container=docker
 
@@ -9,7 +9,7 @@ LABEL bzcomponent="$NAME" \
         release="$RELEASE.$DISTTAG" \
         architecture="$ARCH" \
         atomic.type='system' \
-        maintainer="Jason Brooks <jbrooks@redhat.com>"
+        maintainer="FengyunPan <pan_feng_yun@163.com>"
 
 # Containerized kubelet requires nsenter
 RUN dnf install -y --setopt=tsflags=nodocs util-linux ethtool systemd-udev e2fsprogs xfsprogs && dnf clean all
