@@ -1,4 +1,4 @@
-FROM kubernetes-node:rawhide
+FROM docker.io/fengyunpan/kubernetes-node:v1.9.6.1
 ENV container=docker
 
 ENV NAME=kubernetes-proxy VERSION=0 RELEASE=8 ARCH=x86_64
@@ -8,7 +8,7 @@ LABEL bzcomponent="$NAME" \
         release="$RELEASE.$DISTTAG" \
         architecture="$ARCH" \
         atomic.type='system' \
-        maintainer="Jason Brooks <jbrooks@redhat.com>"
+        maintainer="FengyunPan <pan_feng_yun@163.com>"
 
 RUN dnf install -y --setopt=tsflags=nodocs iptables conntrack-tools && dnf clean all
 

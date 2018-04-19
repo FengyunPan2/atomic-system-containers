@@ -1,4 +1,4 @@
-FROM kubernetes-master:rawhide
+FROM docker.io/fengyunpan/kubernetes-master:v1.9.6.1
 ENV container=docker
 
 ENV NAME=kubernetes-scheduler VERSION=0.1 RELEASE=8 ARCH=x86_64
@@ -8,7 +8,7 @@ LABEL bzcomponent="$NAME" \
         release="$RELEASE.$DISTTAG" \
         architecture="$ARCH" \
         atomic.type='system' \
-        maintainer="Jason Brooks <jbrooks@redhat.com>"
+        maintainer="FengyunPan <pan_feng_yun@163.com>"
 
 COPY launch.sh /usr/bin/kube-scheduler-docker.sh
 
