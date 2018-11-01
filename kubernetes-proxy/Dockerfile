@@ -1,4 +1,4 @@
-FROM docker.io/fengyunpan/kubernetes-node:v1.9.6.1
+FROM docker.io/fengyunpan/kubernetes-node:pfy
 ENV container=docker
 
 ENV NAME=kubernetes-proxy VERSION=0 RELEASE=8 ARCH=x86_64
@@ -10,7 +10,7 @@ LABEL bzcomponent="$NAME" \
         atomic.type='system' \
         maintainer="FengyunPan <pan_feng_yun@163.com>"
 
-RUN dnf install -y --setopt=tsflags=nodocs iptables conntrack-tools && dnf clean all
+RUN dnf -y --setopt=tsflags=nodocs update && dnf install -y --setopt=tsflags=nodocs iptables conntrack-tools ipvsadm ipset kmod  && dnf clean all
 
 LABEL RUN /usr/bin/docker run -d --privileged --net=host 
 

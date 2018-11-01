@@ -298,7 +298,8 @@
                 "noexec",
                 "nodev",
                 "relatime",
-                "ro"
+                "rw",
+                "mode=755"
             ]
         },
         {

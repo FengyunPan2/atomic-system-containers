@@ -275,6 +275,51 @@
             ]
         },
         {
+            "type": "bind",
+            "source": "/usr/sbin/modprobe",
+            "destination": "/usr/sbin/modprobe",
+            "options": [
+                "rbind",
+                "ro"
+            ]
+        },
+        {
+            "type": "bind",
+            "source": "/lib/modules",
+            "destination": "/lib/modules",
+            "options": [
+                "rbind",
+                "rw"
+            ]
+        },
+        {
+            "type": "bind",
+            "source": "/etc/ceph",
+            "destination": "/etc/ceph",
+            "options": [
+                "rbind",
+                "rw"
+            ]
+        },
+        {
+            "type": "bind",
+            "source": "/opt/cni",
+            "destination": "/opt/cni",
+            "options": [
+                "rbind",
+                "rw"
+            ]
+        },
+        {
+            "type": "bind",
+            "source": "/opt/calico",
+            "destination": "/opt/calico",
+            "options": [
+                "rbind",
+                "rw"
+            ]
+        },
+        {
           "type": "bind",
           "source": "/etc/cni/net.d",
           "destination": "/etc/cni/net.d",

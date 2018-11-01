@@ -1,6 +1,4 @@
-#FROM docker.io/fengyunpan/kubernetes-node:pfy
-#FROM kubernetes-node:pfy
-FROM registry.fedoraproject.org/fedora:27
+FROM docker.io/fengyunpan/kubernetes-node:v1.9.6.1
 
 ENV container=docker
 
@@ -13,17 +11,14 @@ LABEL bzcomponent="$NAME" \
         atomic.type='system' \
         maintainer="FengyunPan <pan_feng_yun@163.com>"
 
-ENV CEPH_VERSION "jewel"
 # Containerized kubelet requires nsenter
-RUN ls /rpms/kubernetes-client-1.9.6.1-1.el7.centos.x86_64.rpm
-RUN dnf -y --setopt=tsflags=nodocs update && rpm -Uvh https://download.ceph.com/rpm-$CEPH_VERSION/el7/noarch/ceph-release-1-1.el7.noarch.rpm && dnf -y install dnf-plugins-core && dnf config-manager --add-repo  https://download.docker.com/linux/fedora/docker-ce.repo && yum install -y --nogpgcheck ceph-common && dnf config-manager --set-enabled docker-ce-edge && dnf config-manager --set-enabled docker-ce-test && dnf install -y --setopt=tsflags=nodocs docker-ce  && dnf install -y /rpms/kubernetes-client-1.9.6.1-1.el7.centos.x86_64.rpm && dnf install -y --setopt=tsflags=nodocs /rpms/kubernetes-node-1.9.6.1-1.el7.centos.x86_64.rpm findutils  util-linux ethtool systemd-udev e2fsprogs xfsprogs && dnf clean all
+RUN dnf install -y --setopt=tsflags=nodocs util-linux ethtool systemd-udev e2fsprogs xfsprogs && dnf clean all
 
 LABEL RUN /usr/bin/docker run -d --privileged --net=host --pid=host -v /:/rootfs:ro -v /sys:/sys:rw -v /var/run:/var/run:rw -v /run:/run:rw -v /var/lib/docker:/var/lib/docker:rw -v /var/lib/kubelet:/var/lib/kubelet:slave -v /var/log/containers:/var/log/containers:rw
 
 COPY launch.sh /usr/bin/kubelet-docker.sh
 
 COPY manifest.json tmpfiles.template service.template config.json.template /exports/
-
 
 RUN mkdir -p /exports/hostfs/etc/cni/net.d && \
     mkdir -p /exports/hostfs/etc/kubernetes && \
